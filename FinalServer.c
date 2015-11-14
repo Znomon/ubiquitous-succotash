@@ -1,28 +1,27 @@
-//================================================= file = catdogServer.c =====
-//= A UDP server to reflect strings (switching "cat" to "dog") with loss =
-//=============================================================================
+//================================================= file = FinalServer.c ======
 //= Notes: =
 //= 1) This program conditionally compiles for Winsock and BSD sockets. =
 //= Set the initial #define to WIN or BSD as appropriate. =
-//= 2) The message send loss probability is in the #define as LOSS_PROB =
 //=---------------------------------------------------------------------------=
 //= Example execution: =
 //= Waiting for recvfrom() to complete... =
 //= Received from client: "Test cat catalog excat 123!" =
 //= Sent to client: "Test dog dogalog exdog 123!" =
 //=---------------------------------------------------------------------------=
-//= Build: bcc32 catdogServer.c or cl catdogServer.c wsock32.lib for Winsock =
-//= gcc catdogServer.c -lsocket -lnsl for BSD =
+//= Build: bcc32 FinalServer.c or cl FinalServer.c wsock32.lib for Winsock =
+//= gcc FinalServer.c -lsocket -lnsl for BSD =
 //=---------------------------------------------------------------------------=
 //= Execute: catdogServer =
 //=---------------------------------------------------------------------------=
-//= Author: Ken Christensen =
+//= Author(s): Kasey Kolyno and Ryan Binder =
 //= University of South Florida =
-//= WWW: http://www.csee.usf.edu/~christen =
-//= Email: christen@csee.usf.edu =
+//= Email: (kolyno, #FIXME)@usf.edu =
 //=---------------------------------------------------------------------------=
-//= History: KJC (09/11/15) - Genesis (from udpServer.c) =
+//= History: KJC (11/14/15) - Genesis (from udpServer.c) =
 //=============================================================================
+
+
+
 #define BSD // WIN for Winsock and BSD for BSD sockets
 //----- Include files --------------------------------------------------------
 #include <stdio.h> // Needed for printf()
@@ -41,7 +40,7 @@
 #endif
 //----- Defines --------------------------------------------------------------
 #define PORT_NUM 1050 // Arbitrary port number for the server
-int catdog(char *b); // Switch "cat" to "dog" in buffer b
+int checkRequest(char *b); // Switch "cat" to "dog" in buffer b
 //===== Main program =========================================================
 int main() {
   #ifdef WIN
@@ -91,7 +90,7 @@ int main() {
     char buffer[400];
     char *test = buffer;
     
-    if(catdog(in_buf) == 3)
+    if(checkRequest(in_buf) == 3)
     {
       sprintf(test, "Your username is %s", in_buf);
       strcpy(out_buf, buffer);
@@ -131,15 +130,27 @@ int main() {
 	return (0);
 }
 
-int catdog(char * b) {
+int checkRequest(char * b) {
 	int n; // Length of string b
 	int i; // Loop index
 	// Get length of string b
 	n = strlen(b);
-	// Replace "cat" with "dog" all instances in string b
+	// Checks the message header from the client
 	for (i = 0; i <= n; i++) {
-		if ((b[i] == 'R') && (b[i + 1] == 'E') && (b[i + 2] == 'G')) {
-      return 3;
+		if ((b[i] == 'R') && (b[i + 1] == 'E') && (b[i + 2] == 'G')) 
+		{
+			//First 3 chars are REG, corresponds to registering a username
+			return 1;
+		}
+		else if((b[i] == 'U') && (b[i + 1] == 'N') && (b[i + 2] == 'R'))
+		{
+			//First 3 chars are UNR, corresponds to un-registering a username
+			return 2;
+		}
+		else if((b[i] == 'Q') && (b[i + 1] == 'U') && (b[i + 2] == 'O'))
+		{
+			//First 3 chars are QUO, corresponds to asking for stock quotes
+			return 3;
 		}
 	}
 }
