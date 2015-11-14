@@ -17,7 +17,7 @@
 //= University of South Florida =
 //= Email: (kolyno, #FIXME)@usf.edu =
 //=---------------------------------------------------------------------------=
-//= History: KJC (11/14/15) - Genesis (from udpServer.c) =
+//= History: KFK and #FIXME (11/14/15) - Genesis (from udpServer.c) =
 //=============================================================================
 
 
