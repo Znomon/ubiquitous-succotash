@@ -85,16 +85,15 @@ int main() {
 			exit(-1);
 		}
 		printf(" Received from client: %s \n", in_buf);
-		// Switch "cat" to "dog" in in_buf and copy in_buf to out_buf
     
-    char buffer[400];
-    char *test = buffer;
-    
-    if(checkRequest(in_buf))
-    {
-      sprintf(test, "Your username is %s", in_buf);
-      strcpy(out_buf, buffer);
-    }
+    	char buffer[400];
+    	char *test = buffer;
+
+    	if(checkRequest(in_buf))
+    	{
+      		sprintf(test, "The packet sent looks like this -->   %s", in_buf);
+      		strcpy(out_buf, buffer);
+    	}
     
     
 		//strcpy(out_buf, in_buf);
