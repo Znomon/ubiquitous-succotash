@@ -112,14 +112,17 @@ int main(int argc, char * argv[]) {
 			switch(input)
 			{
 				case 1:
-					printf("\n user requested to register a username \n");
+					printf("\nPlease enter a username to register with:");
 					scanf("%s", &username);
 					// TODO : if username fits criteria send, else loop
 					sprintf(out_buf, "REG,%s;", username);
 					goto sendPkt;
 					break; //should never reach here
 				case 2:
-					printf("\n user requested to un-register a username \n");
+					printf("\nPlease enter a username you want to un-register:");
+					scanf("%s", &username);
+					sprintf(out_buf, "UNR,%s;", username);
+					goto sendPkt;
 					break;
 				case 3:
 					printf("\n user requested to see stock quotes \n");
