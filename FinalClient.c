@@ -98,6 +98,8 @@ int main(int argc, char * argv[]) {
 	// Loop until receive reply message
 	timeStart = time(NULL);
 
+	char username[] = "null";
+
 	while (1) {
 		while(1)
 		{
@@ -111,8 +113,11 @@ int main(int argc, char * argv[]) {
 			{
 				case 1:
 					printf("\n user requested to register a username \n");
+					scanf("%s", &username);
+					// TODO : if username fits criteria send, else loop
+					sprintf(out_buf, "REG,%s;", username);
 					goto sendPkt;
-					break;
+					break; //should never reach here
 				case 2:
 					printf("\n user requested to un-register a username \n");
 					break;
@@ -124,11 +129,6 @@ int main(int argc, char * argv[]) {
 		sendPkt:
 
 		
-
-		printf("Enter \"REG\" to register: ");
-		scanf("%s", out_buf);
-		printf("\n");
-		printf("Faggot \n");
 		// Assign a message to buffer out_buf
 		//strcpy(out_buf, argv[1]);
 		// Now send the message to server.
