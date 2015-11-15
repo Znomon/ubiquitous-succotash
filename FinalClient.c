@@ -107,8 +107,8 @@ int main(int argc, char * argv[]) {
 			char c;
 			do
 			{
-			printf("Select your operation. \n1. Register Username\n2. Un-register Username\n3. Request Quote(s)\nYour Selection:");
-			} while (((scanf("%d%c", &input, &c)!=2 || c!='\n') && clean_stdin()) || input<1 || input>3);
+			printf("Select your operation. \n1. Register Username\n2. Un-register Username\n3. Login\n4. Request Quote(s)\n5. Exit Application\nYour Selection:");
+			} while (((scanf("%d%c", &input, &c)!=2 || c!='\n') && clean_stdin()) || input<1 || input>6);
 			switch(input)
 			{
 				case 1:
@@ -125,8 +125,25 @@ int main(int argc, char * argv[]) {
 					goto sendPkt;
 					break;
 				case 3:
-					printf("\n user requested to see stock quotes \n");
+					printf("\nPlease enter a username to send to the server:");
+					scanf("%s", &username);
 					break;
+				case 4:
+					if(0 != strcmp("null",username))
+					{
+					char quotes[] = "";
+					printf("\nPlease enter the quote(s) you want to receive:");
+					scanf("%s", &quotes);
+					// TODO : loop asking for quotes until exit contidion, append to a comma seperated string and store in quotes
+					sprintf(out_buf, "QUO,%s,%s;", username,quotes);
+					goto sendPkt;
+					}
+					else {
+						printf("Usename not on file, please register with (1) or login with (3).\n\n");
+						break;
+					}
+				case 5:
+					goto exit;
 			}
 		}
 		sendPkt:

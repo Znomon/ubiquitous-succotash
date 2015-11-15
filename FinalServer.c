@@ -90,7 +90,7 @@ int main() {
     char buffer[400];
     char *test = buffer;
     
-    if(checkRequest(in_buf) == 3)
+    if(checkRequest(in_buf))
     {
       sprintf(test, "Your username is %s", in_buf);
       strcpy(out_buf, buffer);
