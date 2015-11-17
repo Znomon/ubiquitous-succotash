@@ -78,6 +78,9 @@ int main() {
 	}
 	//Loop forever
 	while (1) {
+		//open file
+		file = fopen("usernames.txt", "a+");
+
 		// Wait to receive a message from client
 		printf("Waiting for recvfrom() to complete... \n");
 		addr_len = sizeof(client_addr);
@@ -90,18 +93,34 @@ int main() {
     
     	char buffer[400];
     	char *test = buffer;
-
-    	if(checkRequest(in_buf))
-    	{
-      		sprintf(test, "The packet sent looks like this -->   %s", in_buf);
-      		strcpy(out_buf, buffer);
-    	}
-
-        testString(in_buf); //debug
-        
-    
-    
-		//strcpy(out_buf, in_buf);
+		
+		switch(checkRequest(in_buf))
+		{
+			case 1:
+				if(testString(&in_buf))
+				{
+					fprintf(file, "%s\n", in_buf);
+					sprintf(buffer, "ROK;");
+					strcpy(out_buf, buffer);
+				}
+				else
+				{
+					sprintf(buffer, "INU;");
+					strcpy(out_buf, buffer);
+				}
+				break; 
+			case 2:
+				
+				break;
+			case 3:
+				
+				break;
+			case 4:
+				
+				break;
+		}
+		
+		fclose(file);
 
 		// Send out_buf to the client using the server socket
 		retcode = sendto(server_s, out_buf, (strlen(out_buf) + 1), 0, (struct sockaddr * ) & client_addr, sizeof(client_addr));
