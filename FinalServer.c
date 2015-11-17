@@ -76,6 +76,9 @@ int main() {
 		printf("*** ERROR - bind() failed \n");
 		exit(-1);
 	}
+	
+	FILE *file;
+	
 	//Loop forever
 	while (1) {
 		//open file
