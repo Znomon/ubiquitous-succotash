@@ -15,9 +15,9 @@
 //=---------------------------------------------------------------------------=
 //= Author(s): Kasey Kolyno and Ryan Binder =
 //= University of South Florida =
-//= Email: (kolyno, #FIXME)@usf.edu =
+//= Email: (kolyno, rbinder)@mail.usf.edu =
 //=---------------------------------------------------------------------------=
-//= History: KFK and #FIXME (11/14/15) - Genesis (from udpServer.c) =
+//= History: KFK and RKB (11/14/15) - Genesis (from udpServer.c) =
 //=============================================================================
 
 
@@ -25,6 +25,7 @@
 #define BSD // WIN for Winsock and BSD for BSD sockets
 //----- Include files --------------------------------------------------------
 #include <stdio.h> // Needed for printf()
+#include <ctype.h> //Needed for isalpha() and isdigit()
 #include <string.h> // Needed for strcpy()
 #include <stdlib.h> // Needed for exit() and rand()
 #ifdef WIN
@@ -40,7 +41,8 @@
 #endif
 //----- Defines --------------------------------------------------------------
 #define PORT_NUM 1050 // Arbitrary port number for the server
-int checkRequest(char *b); // Switch "cat" to "dog" in buffer b
+int checkRequest(char *b); //Checks what user is requesting
+int testString (char *s); //Tests if username is alphanumeric
 //===== Main program =========================================================
 int main() {
   #ifdef WIN
@@ -94,6 +96,9 @@ int main() {
       		sprintf(test, "The packet sent looks like this -->   %s", in_buf);
       		strcpy(out_buf, buffer);
     	}
+
+        testString(in_buf); //debug
+        
     
     
 		//strcpy(out_buf, in_buf);
@@ -152,4 +157,72 @@ int checkRequest(char * b) {
 			return 3;
 		}
 	}
+}
+
+//make function that takes string and checks for alphanumeric 
+//If not return 0, if is return 1
+int testString(char *s)
+{
+   int i = 0; //Counter for loop
+   int j = 0; //Counter 
+   int strLength = 0; //Holds length of string inputted
+   int userLength = 0; //Holds length of just username
+
+   strLength = strlen(s); //Get length of string entered   
+   char tmp[strLength - 5]; //Array to hold only the username
+
+   printf("strLength = %d \n", strLength); //debug
+   for(i = 0; i < strLength; ++i) //debug
+   {
+      printf("s[i] = %c \n", s[i]); 
+   }
+
+   for(i = 0; i < strLength; ++i) //Gets just the username
+   {
+      if(i == 0 || i == 1 || i == 2 || i == 3) //Skip the first 4 chars
+      {
+         continue;
+      }
+      else if(i == strLength - 1) //Skip the last char which is a semicolon
+      {
+         continue;
+      }
+      else
+      {
+         tmp[j] = s[i];
+         printf("tmp array now holds: %c \n", tmp[j]); //debug
+         ++j;
+      }
+   }
+
+   userLength = strlen(tmp); //THIS IS ALWAYS 6 FOR SOME STUPID REASON
+   printf("userLength = %d \n", userLength); //debug
+
+   for(i = 0; i < userLength; ++i)
+   {
+      printf("Dis is in da array: %c \n", tmp[i]);
+   }
+
+   for(i = 0; i < userLength; ++i)
+   {
+      if(isalpha(tmp[i]))
+      {
+         printf("alpha: %c \n", tmp[i]);
+         continue;
+      }
+      else if(isdigit(tmp[i]))
+      {
+         printf("numeric: %c \n", tmp[i]);
+         continue;
+      }
+      else if(tmp[i] == '\0')
+      {
+         printf("null terminal: \n");
+         continue;
+      }
+      else
+      {
+         printf("Invalid username ya fuq! %c \n", tmp[i]);
+      }
+   }
 }

@@ -41,7 +41,7 @@
 #endif
 //----- Defines ---------------------------------------------------------------
 #define PORT_NUM 1050 // Port number used
-#define IP_ADDR "127.0.0.1" //"66.158.200.153" // IP address of server1 (*** HARDWIRED ***)
+#define IP_ADDR "66.158.200.153" //"127.0.0.1" // IP address of server1 (*** HARDWIRED ***)
 #define MAX_WAIT 5 // Maximum wait in seconds
 //===== Main program ==========================================================
 int clean_stdin()
@@ -141,7 +141,6 @@ int main(int argc, char * argv[]) {
 					else {
 						printf("Usename not on file, please register with (1) or login with (3).\n\n");
 						break;
-						//hi ryan
 					}
 				case 5:
 					goto exit;
