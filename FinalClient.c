@@ -141,7 +141,6 @@ int main(int argc, char * argv[]) {
 					else {
 						printf("Usename not on file, please register with (1) or login with (3).\n\n");
 						break;
-						//hi ryan
 					}
 				case 5:
 					goto exit;
